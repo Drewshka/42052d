@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => ({
 
 const Input = (props) => {
   const classes = useStyles();
-  // const [text, setText] = useState("");
   const [text, setText] = useState([]);
 
   const { postMessage, otherUser, conversationId, user } = props;
