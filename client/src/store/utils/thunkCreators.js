@@ -1,10 +1,12 @@
 import axios from "axios";
 import socket from "../../socket";
+import store from "../../store";
 import {
   gotConversations,
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  markRead,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -83,12 +85,21 @@ const saveMessage = async (body) => {
   return data;
 };
 
+const sendMarkRead = (data) => {
+  socket.emit("mark-read", data.data);
+};
+
 const sendMessage = (data, body) => {
   socket.emit("new-message", {
     message: data.message,
     recipientId: body.recipientId,
     sender: data.sender,
   });
+};
+
+const saveMarkedRead = async (readMessages) => {
+  const res = await axios.put("/api/messages/read", readMessages);
+  return res;
 };
 
 // message format to send: {recipientId, text, conversationId}
@@ -105,6 +116,28 @@ export const postMessage = (body) => async (dispatch) => {
     }
 
     sendMessage(data, body);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Uses store state to populate the db and broadcast in the socket
+export const markMessagesRead = (user, convoId) => async (dispatch) => {
+  try {
+    dispatch(markRead(user, convoId));
+
+    const messages = store
+      .getState()
+      .conversations.find((conversation) => conversation.id === convoId)
+      .messages.filter((msg) => msg.senderId !== user);
+
+    const messageId = messages[messages.length - 1].id;
+    const data = await saveMarkedRead({
+      conversationId: convoId,
+      messageId: messageId,
+    });
+
+    sendMarkRead(data);
   } catch (error) {
     console.error(error);
   }
