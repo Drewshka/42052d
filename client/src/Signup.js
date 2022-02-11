@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     height: "fill",
   },
   form: {
-    padding: theme.spacing(6),
+    padding: theme.spacing(10),
+    paddingTop: "20px",
   },
   shadowedButton: {
     boxShadow: "2px 2px 5px 3px rgb(230, 230, 230)",
