@@ -15,8 +15,7 @@ import { register } from "./store/utils/thunkCreators";
 const Login = (props) => {
   const history = useHistory();
   const { user, register } = props;
-  // const [formErrorMessage, setFormErrorMessage] = useState({});
-  const [formErrorMessage, setFormErrorMessage] = useState([]);
+  const [formErrorMessage, setFormErrorMessage] = useState({});
 
   const handleRegister = async (event) => {
     event.preventDefault();
