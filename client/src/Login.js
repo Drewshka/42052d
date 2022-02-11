@@ -101,7 +101,7 @@ import {
 import { login } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Login.scss";
-import { relativeTimeRounding } from "moment";
+// import { relativeTimeRounding } from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -172,7 +172,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(10),
   },
   textField: {
-    width: "25rem",
+    // width: "25rem",
+    width: "35vw",
     marginBottom: "2rem",
   },
 
