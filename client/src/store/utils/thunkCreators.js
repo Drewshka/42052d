@@ -113,6 +113,7 @@ export const postMessage = (body) => async (dispatch) => {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
       dispatch(setNewMessage(data.message));
+      // receiverHasRead: false
     }
 
     sendMessage(data, body);
@@ -151,3 +152,5 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     console.error(error);
   }
 };
+
+//*new code

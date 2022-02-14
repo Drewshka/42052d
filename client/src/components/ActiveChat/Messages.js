@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
-// import { SenderBubble } from ".";
-// import { OtherUserBubble } from ".";
 
 import moment from "moment";
 
