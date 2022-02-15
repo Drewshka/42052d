@@ -9,12 +9,13 @@ import {
   FormControl,
   TextField,
   FormHelperText,
-  CardMedia,
   InputLabel,
+  CardMedia,
   Card,
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
+import JoinConversation from "./components/JoinConversation/JoinConversation";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     top: "35%",
     textAlign: "center",
-    fontSize: 38,
+    fontSize: 32,
     margin: theme.spacing(0, "auto"),
     [theme.breakpoints.up("lg")]: {
       width: "30rem",
@@ -95,6 +96,14 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     padding: "1rem 4rem 1rem 4rem",
     marginLeft: theme.spacing(4),
+    width: "160px",
+    height: "56px",
+    borderRadius: "3px",
+    // position: "absolute",
+    // left: "0%",
+    // right: "0%",
+    // top: "0%",
+    // bottom: "0%",
   },
 }));
 
@@ -103,7 +112,6 @@ const Login = (props) => {
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState([]);
-  // const [formErrorMessage, setFormErrorMessage] = useState({});
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -127,7 +135,8 @@ const Login = (props) => {
   return (
     // <Grid container justify="center">
     <Grid container direction="row" className={classes.root}>
-      <Grid item xs={5} className={classes.item}>
+      <JoinConversation />
+      {/* <Grid item xs={5} className={classes.item}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
@@ -172,7 +181,7 @@ const Login = (props) => {
             </Typography>
           </Box>
         </Card>
-      </Grid>
+      </Grid> */}
       <Grid item xs={7} className={classes.form}>
         <Box className={classes.createAccount}>
           <Typography color="secondary" className={classes.secondaryText}>

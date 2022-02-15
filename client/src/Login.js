@@ -1,89 +1,3 @@
-// import React from "react";
-// import { Redirect, useHistory } from "react-router-dom";
-// import { connect } from "react-redux";
-// import {
-//   Grid,
-//   Box,
-//   Typography,
-//   Button,
-//   FormControl,
-//   TextField,
-// } from "@material-ui/core";
-// import { login } from "./store/utils/thunkCreators";
-// import "./Login.scss";
-
-// const Login = (props) => {
-//   const history = useHistory();
-//   const { user, login } = props;
-
-//   const handleLogin = async (event) => {
-//     event.preventDefault();
-//     const username = event.target.username.value;
-//     const password = event.target.password.value;
-
-//     await login({ username, password });
-//   };
-
-//   if (user.id) {
-//     return <Redirect to="/home" />;
-//   }
-
-//   return (
-//     <Grid className="login" container justify="center">
-//       <section className="login_image"></section>
-//       <Box className="login_box">
-//         <Grid container item>
-//           <Typography>Need to register?</Typography>
-//           <Button onClick={() => history.push("/register")}>Register</Button>
-//         </Grid>
-//         <form onSubmit={handleLogin}>
-//           <Grid>
-//             <Grid>
-//               <FormControl margin="normal" required>
-//                 <TextField
-//                   aria-label="username"
-//                   label="Username"
-//                   name="username"
-//                   type="text"
-//                 />
-//               </FormControl>
-//             </Grid>
-//             <FormControl margin="normal" required>
-//               <TextField
-//                 label="password"
-//                 aria-label="password"
-//                 type="password"
-//                 name="password"
-//               />
-//             </FormControl>
-//             <Grid>
-//               <Button type="submit" variant="contained" size="large">
-//                 Login
-//               </Button>
-//             </Grid>
-//           </Grid>
-//         </form>
-//       </Box>
-//     </Grid>
-//   );
-// };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     user: state.user,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     login: (credentials) => {
-//       dispatch(login(credentials));
-//     },
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Login);
-
 import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
@@ -101,7 +15,7 @@ import {
 import { login } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Login.scss";
-// import { relativeTimeRounding } from "moment";
+import JoinConversation from "./components/JoinConversation/JoinConversation";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     padding: theme.spacing(10),
+    paddingTop: "20px",
   },
   shadowedButton: {
     boxShadow: "2px 2px 5px 3px rgb(230, 230, 230)",
@@ -151,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     top: "35%",
     textAlign: "center",
-    fontSize: 38,
+    fontSize: 32,
     margin: theme.spacing(0, "auto"),
     [theme.breakpoints.up("lg")]: {
       width: "30rem",
@@ -180,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
   login: {
     padding: "1rem 4rem 1rem 4rem",
     marginLeft: theme.spacing(20),
+    width: "160px",
+    height: "56px",
+    borderRadius: "3px",
   },
 }));
 
@@ -202,7 +120,8 @@ const Login = (props) => {
 
   return (
     <Grid container direction="row" className={classes.root}>
-      <Grid item xs={5} className={classes.item}>
+      <JoinConversation />
+      {/* <Grid item xs={5} className={classes.item}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
@@ -247,7 +166,7 @@ const Login = (props) => {
             </Typography>
           </Box>
         </Card>
-      </Grid>
+      </Grid> */}
       <Grid item xs={7} className={classes.form}>
         <Box className={classes.createAccount}>
           <Typography color="secondary" className={classes.secondaryText}>
