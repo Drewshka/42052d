@@ -1,6 +1,5 @@
 export const addMessageToStore = (state, payload) => {
   const { message, sender } = payload;
-
   // if sender isn't null, that means the message needs to be put in a brand new convo
   if (sender !== null) {
     const newConvo = {
@@ -9,12 +8,12 @@ export const addMessageToStore = (state, payload) => {
       messages: [message],
     };
     newConvo.latestMessageText = message.text;
-
     return [newConvo, ...state];
   }
 
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
+
       const convoCopy = { ...convo };
       console.log(convoCopy);
       convoCopy.messages.push(message);
@@ -74,16 +73,11 @@ export const addSearchedUsersToStore = (state, users) => {
 export const addNewConvoToStore = (state, recipientId, message) => {
   return state.map((convo) => {
     if (convo.otherUser.id === recipientId) {
-      //* declare new variable newConvo when starting new chat
-      const newConvo = { ...convo };
-      newConvo.id = message.conversationId;
-      newConvo.messages.push(message);
-      newConvo.latestMessageText = message.text;
-      newConvo.unreadMessages += 1;
-
-      return newConvo;
-    } else {
+      convo.id = message.conversationId;
+      convo.messages.push(message);
+      convo.latestMessageText = message.text;
       return convo;
+
     }
   });
 };
@@ -124,6 +118,7 @@ export const markReadInStore = (state, reader, convoId) => {
     }
   });
 };
+
 //* added new function which was missing from imports in conversation.js
 export const sortMessagesForStore = (conversations) => {
   return conversations.map((conversation) => {
@@ -140,3 +135,4 @@ export const sortMessagesForStore = (conversations) => {
     return newConvo;
   });
 };
+
