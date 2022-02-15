@@ -9,7 +9,6 @@ import { Home, SnackbarError } from "./components";
 const Routes = (props) => {
   const { user, fetchUser } = props;
   const [errorMessage, setErrorMessage] = useState("");
-  // const [errorMessage, setErrorMessage] = useState([]);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   useEffect(() => {
