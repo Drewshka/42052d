@@ -12,24 +12,6 @@ const useStyles = makeStyles((theme) => ({
   item: {
     height: "fill",
   },
-  form: {
-    padding: theme.spacing(10),
-    paddingTop: "20px",
-  },
-  shadowedButton: {
-    boxShadow: "2px 2px 5px 3px rgb(230, 230, 230)",
-    padding: theme.spacing(2, 4),
-  },
-  secondaryText: {
-    color: "#9CADC8",
-    fontSize: "1rem",
-    marginRight: theme.spacing(6),
-    position: "relative",
-    paddingBottom: "1rem",
-  },
-  input: {
-    color: "rgb(230, 230, 230)",
-  },
   media: {
     height: "100%",
   },
@@ -38,61 +20,43 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   overlay: {
+    // position: "absolute",
+    // width: "425px",
+    // height: "700px",
+    // left: "0px",
+    // top: "0px",
     position: "absolute",
     top: "0",
     left: "0",
-    bottom: "0",
-    color: "white",
-    // background:
-    //   "linear-gradient(180deg, rgba(58,141,255,0.85) 0%, rgba(134,185,255,0.85) 100%)",
-    backgroundImage: `url(${Image})`,
-    height: "100%",
+    // height: "100%",
+    height: "130%",
     width: "100%",
+    // bottom: "0",
+    color: "white",
+    backgroundImage: `linear-gradient(180deg, rgba(58,141,255,0.85) 0%, rgba(134,185,255,0.85) 100%), url(${Image})`,
     textAlign: "center",
-    // background:
-    //   "linear-gradient(180deg, rgba(58,141,255,0.85) 0%, rgba(134,185,255,0.85) 100%), url(./assets/bg-img.png)",
-    // background-image: linear-gradient(
-    //   180deg,
-    //   rgba(58, 141, 255, 0.85) 0%,
-    //   rgba(134, 185, 255, 0.85) 100%
-    // ),
-    // url("./assets/bg-img.png"),
-    backgroundposition: "center",
-    backgroundrepeat: "no-repeat",
-    backgroundsize: "cover",
+    backgroundPosition: "10% 40%",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
   },
   textOverlay: {
     position: "relative",
-    top: "35%",
+    top: "30%",
     textAlign: "center",
-    fontSize: 32,
+    fontSize: 26,
+    lineHeight: "40px",
     margin: theme.spacing(0, "auto"),
     [theme.breakpoints.up("lg")]: {
       width: "30rem",
     },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 18,
+    },
   },
   iconOverlay: {
     position: "relative",
-    top: "30%",
+    top: "25%",
     textAlign: "center",
-  },
-  createAccount: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  formInput: {
-    marginTop: theme.spacing(10),
-  },
-  textField: {
-    width: "35vw",
-    marginBottom: "2rem",
-  },
-
-  submit: {
-    padding: "1rem 4rem 1rem 4rem",
-    marginLeft: theme.spacing(4),
   },
 }));
 
