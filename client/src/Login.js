@@ -27,6 +27,11 @@ const useStyles = makeStyles((theme) => ({
   item: {
     height: "fill",
   },
+  header: {
+    fontSize: "26px",
+    paddingBottom: "2rem",
+  },
+
   form: {
     padding: theme.spacing(10),
     paddingTop: "20px",
@@ -123,7 +128,7 @@ const Login = (props) => {
           </Button>
         </Box>
         <Box className={classes.formInput}>
-          <Typography variant="h1" id="header">
+          <Typography variant="h1" id="header" className={classes.header}>
             Welcome back!
           </Typography>
           <form onSubmit={handleLogin}>

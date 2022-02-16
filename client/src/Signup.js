@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
+// import { Form } from "react-final-form";
 import JoinConversation from "./components/JoinConversation/JoinConversation";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     height: "fill",
+  },
+  header: {
+    fontSize: "26px",
+    paddingBottom: "1rem",
   },
   form: {
     padding: theme.spacing(10),
@@ -45,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     marginRight: theme.spacing(6),
     position: "relative",
+    paddingBottom: "1rem",
   },
   input: {
     color: "rgb(230, 230, 230)",
@@ -71,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: "45vw",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   },
   submit: {
     // marginLeft: theme.spacing(4),
@@ -132,10 +138,12 @@ const Login = (props) => {
             <Typography>Need to log in?</Typography>
             <Button onClick={() => history.push("/login")}>Login</Button>
           </Grid> */}
-          <Typography variant="h1" id="header">
+          <Typography variant="h1" id="header" className={classes.header}>
             Create an account.
           </Typography>
-          <form onSubmit={handleRegister}>
+          {/* <form onSubmit={handleRegister}> */}
+          {/* <Form onSubmit={handleRegister}> */}
+          <FormControl onSubmit={handleRegister}>
             <Grid>
               <Grid>
                 <InputLabel className={classes.secondaryText}>
@@ -217,7 +225,9 @@ const Login = (props) => {
                 </Button>
               </Grid>
             </Grid>
-          </form>
+          </FormControl>
+          {/* </Form> */}
+          {/* </form> */}
         </Box>
       </Grid>
     </Grid>
