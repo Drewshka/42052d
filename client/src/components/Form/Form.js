@@ -10,9 +10,9 @@ import {
   TextField,
   InputLabel,
 } from "@material-ui/core";
-import { login } from "./store/utils/thunkCreators";
+// import { login } from "./store/utils/thunkCreators";
+import { login } from "../../store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
-import JoinConversation from "./components/JoinConversation/JoinConversation";
 
 const useStyles = makeStyles((theme) => ({
   //   root: {

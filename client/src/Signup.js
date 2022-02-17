@@ -10,12 +10,9 @@ import {
   TextField,
   FormHelperText,
   InputLabel,
-  // CardMedia,
-  // Card,
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
-// import { Form } from "react-final-form";
 import JoinConversation from "./components/JoinConversation/JoinConversation";
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(10),
   },
   formLine: {
-    // padding: "10px 0",
     margin: "16px 0 8px",
   },
   textField: {

@@ -13,6 +13,7 @@ import {
 import { login } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 import JoinConversation from "./components/JoinConversation/JoinConversation";
+// import Form from "./components/Form/Form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontSize: "26px",
-    paddingBottom: "2rem",
+    paddingBottom: "1rem",
   },
 
   form: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     marginRight: theme.spacing(6),
     position: "relative",
+    paddingBottom: "1rem",
   },
   forgot: {
     position: "absolute",
@@ -141,6 +143,7 @@ const Login = (props) => {
           <Typography variant="h1" id="header" className={classes.header}>
             Welcome back!
           </Typography>
+          {/* <Form /> */}
           {/* <form onSubmit={handleLogin}> */}
           <FormControl onSubmit={handleLogin}>
             <Grid>
@@ -171,8 +174,6 @@ const Login = (props) => {
                   name="password"
                 />
               </FormControl>
-              {/* <Grid className={classes.submit}>
-               */}
               <Grid className={classes.login}>
                 <Button
                   className={classes.login}
