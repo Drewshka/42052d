@@ -18,13 +18,9 @@ const useStyles = makeStyles((theme) => ({
   card: {
     position: "relative",
     height: "100%",
+    // height: "100vh",
   },
   overlay: {
-    // position: "absolute",
-    // width: "425px",
-    // height: "700px",
-    // left: "0px",
-    // top: "0px",
     position: "absolute",
     top: "0",
     left: "0",
@@ -38,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "10% 40%",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    [theme.breakpoints.down("sm")]: {
+      height: "100%",
+    },
   },
   textOverlay: {
     position: "relative",

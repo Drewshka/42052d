@@ -15,12 +15,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import JoinConversation from "./components/JoinConversation/JoinConversation";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    height: "100vh",
-    // height: "100%",
-  },
+  //   root: {
+  //     flexGrow: 1,
+  //     width: "100%",
+  //     height: "100vh",
+  //     // height: "100%",
+  //   },
   item: {
     height: "fill",
   },
@@ -104,9 +104,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = (props) => {
+const Form = (props) => {
   const classes = useStyles();
-  const history = useHistory();
+  //   const history = useHistory();
   const { user, login } = props;
 
   const handleLogin = async (event) => {
@@ -122,73 +122,45 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container direction="row" className={classes.root}>
-      <JoinConversation />
-      <Grid item xs={7} className={classes.form}>
-        <Box className={classes.createAccount}>
-          <Typography color="secondary" className={classes.secondaryText}>
-            {"Don't have an account?"}
-          </Typography>
-          <Button
-            className={classes.shadowedButton}
-            size="large"
-            color="primary"
-            onClick={() => history.push("/register")}>
-            Create Account
-          </Button>
-        </Box>
-        <Box className={classes.formInput}>
-          <Typography variant="h1" id="header" className={classes.header}>
-            Welcome back!
-          </Typography>
-          {/* <form onSubmit={handleLogin}> */}
-          <FormControl onSubmit={handleLogin}>
-            <Grid>
-              <Grid>
-                <InputLabel className={classes.secondaryText}>
-                  Username
-                </InputLabel>
-                <FormControl margin="normal" required>
-                  <TextField
-                    className={classes.textField}
-                    aria-label="username"
-                    name="username"
-                    type="text"
-                  />
-                </FormControl>
-              </Grid>
-              <InputLabel className={classes.secondaryText}>
-                Password
-                <Typography id="forgot" className={classes.forgot}>
-                  Forgot?
-                </Typography>
-              </InputLabel>
-              <FormControl margin="normal" required>
-                <TextField
-                  className={classes.textField}
-                  aria-label="password"
-                  type="password"
-                  name="password"
-                />
-              </FormControl>
-              {/* <Grid className={classes.submit}>
-               */}
-              <Grid className={classes.login}>
-                <Button
-                  className={classes.login}
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  size="large">
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
+    <FormControl onSubmit={handleLogin}>
+      <Grid>
+        <Grid>
+          <InputLabel className={classes.secondaryText}>Username</InputLabel>
+          <FormControl margin="normal" required>
+            <TextField
+              className={classes.textField}
+              aria-label="username"
+              name="username"
+              type="text"
+            />
           </FormControl>
-          {/* </form> */}
-        </Box>
+        </Grid>
+        <InputLabel className={classes.secondaryText}>
+          Password
+          <Typography id="forgot" className={classes.forgot}>
+            Forgot?
+          </Typography>
+        </InputLabel>
+        <FormControl margin="normal" required>
+          <TextField
+            className={classes.textField}
+            aria-label="password"
+            type="password"
+            name="password"
+          />
+        </FormControl>
+        <Grid className={classes.login}>
+          <Button
+            className={classes.login}
+            type="submit"
+            color="primary"
+            variant="contained"
+            size="large">
+            Login
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+    </FormControl>
   );
 };
 
@@ -206,4 +178,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
