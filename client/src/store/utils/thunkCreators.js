@@ -104,15 +104,14 @@ const saveMarkedRead = async (readMessages) => {
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
-export const postMessage = (body) => (dispatch) => {
+export const postMessage = (body) => async (dispatch) => {
   try {
-    const data = saveMessage(body);
+    const data = await saveMessage(body);
 
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
       dispatch(setNewMessage(data.message));
-      // receiverHasRead: false
     }
 
     sendMessage(data, body);
@@ -142,7 +141,6 @@ export const markMessagesRead = (user, convoId) => async (dispatch) => {
     console.error(error);
   }
 };
-
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/users/${searchTerm}`);
@@ -151,5 +149,3 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     console.error(error);
   }
 };
-
-//*new code

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontSize: "26px",
-    paddingBottom: "1rem",
+    paddingBottom: "2rem",
   },
 
   form: {
@@ -49,13 +49,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     marginRight: theme.spacing(6),
     position: "relative",
-    paddingBottom: "1rem",
+    // paddingBottom: "1rem",
   },
   forgot: {
     position: "absolute",
     left: "90%",
     right: "26rem",
-    // top: "1.635rem",
+    top: "1.65rem",
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: "600",
@@ -144,8 +144,8 @@ const Login = (props) => {
             Welcome back!
           </Typography>
           {/* <Form /> */}
-          {/* <form onSubmit={handleLogin}> */}
-          <FormControl onSubmit={handleLogin}>
+          <form onSubmit={handleLogin}>
+            {/* <FormControl onSubmit={handleLogin}> */}
             <Grid>
               <Grid>
                 <InputLabel className={classes.secondaryText}>
@@ -185,8 +185,8 @@ const Login = (props) => {
                 </Button>
               </Grid>
             </Grid>
-          </FormControl>
-          {/* </form> */}
+            {/* </FormControl> */}
+          </form>
         </Box>
       </Grid>
     </Grid>

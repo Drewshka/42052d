@@ -8,14 +8,13 @@ export const addMessageToStore = (state, payload) => {
       messages: [message],
     };
     newConvo.latestMessageText = message.text;
+
     return [newConvo, ...state];
   }
 
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
-
       const convoCopy = { ...convo };
-      console.log(convoCopy);
       convoCopy.messages.push(message);
       convoCopy.latestMessageText = message.text;
       convoCopy.unreadMessages += 1;
@@ -30,7 +29,7 @@ export const addOnlineUserToStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
-      convoCopy.otherUser = { ...convoCopy.otherUser, online: true };
+      convoCopy.otherUser.online = true;
       return convoCopy;
     } else {
       return convo;
@@ -42,7 +41,7 @@ export const removeOfflineUserFromStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
-      convoCopy.otherUser = { ...convoCopy.otherUser, online: false };
+      convoCopy.otherUser.online = false;
       return convoCopy;
     } else {
       return convo;
@@ -73,11 +72,15 @@ export const addSearchedUsersToStore = (state, users) => {
 export const addNewConvoToStore = (state, recipientId, message) => {
   return state.map((convo) => {
     if (convo.otherUser.id === recipientId) {
-      convo.id = message.conversationId;
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
+      const newConvo = { ...convo };
+      newConvo.id = message.conversationId;
+      newConvo.messages.push(message);
+      newConvo.latestMessageText = message.text;
+      newConvo.unreadMessages += 1;
 
+      return newConvo;
+    } else {
+      return convo;
     }
   });
 };
@@ -85,7 +88,7 @@ export const addNewConvoToStore = (state, recipientId, message) => {
 //* added new function which was missing from imports in conversation.js
 export const markReadInStore = (state, reader, convoId) => {
   // Find current conversation
-  // Use max to find most recently read message and set it to true
+  // Use max to find most recent read message and set it to true
   return state.map((convo) => {
     if (convo.id === convoId) {
       const newConvo = { ...convo };
@@ -135,4 +138,3 @@ export const sortMessagesForStore = (conversations) => {
     return newConvo;
   });
 };
-

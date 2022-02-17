@@ -1,26 +1,18 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Box,
   Typography,
   Button,
   FormControl,
   TextField,
   InputLabel,
 } from "@material-ui/core";
-// import { login } from "./store/utils/thunkCreators";
 import { login } from "../../store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  //   root: {
-  //     flexGrow: 1,
-  //     width: "100%",
-  //     height: "100vh",
-  //     // height: "100%",
-  //   },
   item: {
     height: "fill",
   },

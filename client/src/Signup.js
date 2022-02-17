@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontSize: "26px",
-    paddingBottom: "1rem",
+    paddingBottom: "2rem",
   },
   form: {
     padding: theme.spacing(10),
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     marginRight: theme.spacing(6),
     position: "relative",
-    paddingBottom: "1rem",
+    // paddingBottom: "1rem",
   },
   input: {
     color: "rgb(230, 230, 230)",
@@ -130,16 +130,12 @@ const Login = (props) => {
           </Button>
         </Box>
         <Box className={classes.formInput}>
-          {/* <Grid container item>
-            <Typography>Need to log in?</Typography>
-            <Button onClick={() => history.push("/login")}>Login</Button>
-          </Grid> */}
           <Typography variant="h1" id="header" className={classes.header}>
             Create an account.
           </Typography>
-          {/* <form onSubmit={handleRegister}> */}
-          {/* <Form onSubmit={handleRegister}> */}
-          <FormControl onSubmit={handleRegister}>
+          <form onSubmit={handleRegister}>
+            {/* <Form onSubmit={handleRegister}> */}
+            {/* <FormControl onSubmit={handleRegister}> */}
             <Grid>
               <Grid>
                 <InputLabel className={classes.secondaryText}>
@@ -221,9 +217,9 @@ const Login = (props) => {
                 </Button>
               </Grid>
             </Grid>
-          </FormControl>
-          {/* </Form> */}
-          {/* </form> */}
+            {/* </FormControl> */}
+            {/* </Form> */}
+          </form>
         </Box>
       </Grid>
     </Grid>

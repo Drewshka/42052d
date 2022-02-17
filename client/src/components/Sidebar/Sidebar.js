@@ -3,8 +3,6 @@ import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Search, Chat, CurrentUser } from "./index.js";
-import { markMessagesRead } from "../../store/utils/thunkCreators.js";
-import { markRead } from "../../store/conversations.js";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,12 +23,6 @@ const Sidebar = (props) => {
   const classes = useStyles();
   const conversations = props.conversations || [];
   const { handleChange, searchTerm } = props;
-
-  // console.log(props);
-  console.log(props);
-  console.log(markRead);
-
-  console.log(markMessagesRead);
 
   return (
     <Box className={classes.root}>
