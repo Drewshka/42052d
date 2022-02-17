@@ -14,6 +14,7 @@ import {
 import { register } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 import JoinConversation from "./components/JoinConversation/JoinConversation";
+import Username from "./components/Form/Username";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -134,24 +135,8 @@ const Login = (props) => {
             Create an account.
           </Typography>
           <form onSubmit={handleRegister}>
-            {/* <Form onSubmit={handleRegister}> */}
-            {/* <FormControl onSubmit={handleRegister}> */}
             <Grid>
-              <Grid>
-                <InputLabel className={classes.secondaryText}>
-                  Username
-                </InputLabel>
-                <FormControl className={classes.formLine}>
-                  <TextField
-                    // label="Username"
-                    className={classes.textField}
-                    aria-label="username"
-                    name="username"
-                    type="text"
-                    required
-                  />
-                </FormControl>
-              </Grid>
+              <Username />
               <Grid>
                 <InputLabel className={classes.secondaryText}>
                   E-mail address
@@ -217,8 +202,6 @@ const Login = (props) => {
                 </Button>
               </Grid>
             </Grid>
-            {/* </FormControl> */}
-            {/* </Form> */}
           </form>
         </Box>
       </Grid>
