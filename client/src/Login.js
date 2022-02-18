@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: "100%",
     height: "100vh",
-    // height: "100%",
   },
   item: {
     height: "fill",

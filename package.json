@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "mui-image": "^1.0.4",
     "notistack": "^2.0.3",
     "sass": "^1.49.7"
   }
