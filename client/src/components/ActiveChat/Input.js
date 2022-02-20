@@ -4,7 +4,7 @@ import {
   FilledInput,
   CardMedia,
   Card,
-  // Button,
+  Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -55,6 +55,7 @@ const Input = (props) => {
 
   const handleChange = (event) => {
     setText(event.target.value);
+    // setImage(event.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
@@ -65,7 +66,11 @@ const Input = (props) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
+      // attachments: this.data.url,
     };
+    console.log(event.target.image);
+    console.log(image);
+    console.log(url);
     await postMessage(reqBody);
     setText("");
   };
@@ -84,17 +89,20 @@ const Input = (props) => {
         <div>
           <input
             type="file"
-            onChange={(e) => setImage(e.target.files[0])}></input>
-          <button onClick={uploadImage}>Upload</button>
-          {/* <Button
+            // onChange={handleChange}
+            onChange={(event) => setImage(event.target.files[0])}></input>
+          {/* <button onClick={uploadImage}>Upload</button> */}
+          <Button
             className={classes.login}
             onClick={uploadImage}
+            value={image}
+            name="image"
             type="submit"
             color="primary"
             variant="contained"
             size="large">
             Upload
-          </Button> */}
+          </Button>
         </div>
         <div>
           <h1>Uploaded image will be displayed here</h1>
