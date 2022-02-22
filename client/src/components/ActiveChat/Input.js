@@ -9,6 +9,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+// import Uploader from "./Uploader";
 // import Image from "mui-image";
 // import { Image } from "mui-image";
 
@@ -39,7 +40,7 @@ const Input = (props) => {
     data.append("file", image);
     data.append("upload_preset", "drewshka");
     data.append("cloud_name", "daknpbx8j");
-    fetch("  https://api.cloudinary.com/v1_1/daknpbx8j/image/upload", {
+    fetch("https://api.cloudinary.com/v1_1/daknpbx8j/image/upload", {
       method: "post",
       body: data,
     })
@@ -55,7 +56,6 @@ const Input = (props) => {
 
   const handleChange = (event) => {
     setText(event.target.value);
-    // setImage(event.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
@@ -66,13 +66,13 @@ const Input = (props) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      // attachments: this.data.url,
+      attachments: [url],
     };
-    console.log(event.target.image);
     console.log(image);
-    console.log(url);
+    console.log([url]);
     await postMessage(reqBody);
     setText("");
+    // setUrl("");
   };
 
   return (
@@ -87,16 +87,19 @@ const Input = (props) => {
           onChange={handleChange}
         />
         <div>
+          {/* <Uploader /> */}
+          {/* <input
+            type="file"
+            onChange={(event) => setImage(event.target.files[0])}></input> */}
           <input
             type="file"
-            // onChange={handleChange}
-            onChange={(event) => setImage(event.target.files[0])}></input>
-          {/* <button onClick={uploadImage}>Upload</button> */}
+            multiple
+            onChange={(event) => setImage(...event.target.files)}></input>
           <Button
             className={classes.login}
             onClick={uploadImage}
-            value={image}
-            name="image"
+            value={url}
+            name="url"
             type="submit"
             color="primary"
             variant="contained"
@@ -109,8 +112,6 @@ const Input = (props) => {
           <Card className={classes.card}>
             <CardMedia className={classes.media} component="img" src={url} />
           </Card>
-          {/* <img src={url} alt="upload" /> */}
-          {/* <Image src={url} /> */}
         </div>
       </FormControl>
     </form>

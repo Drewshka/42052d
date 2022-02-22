@@ -45,13 +45,15 @@ const useStyles = makeStyles((theme) => ({
 // };
 const SenderBubble = (props) => {
   const classes = useStyles();
-  const { time, text, otherUser, isMostRecentRead } = props;
+  const { time, text, otherUser, isMostRecentRead, attachments } = props;
+  // console.log(attachments);
 
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{text}</Typography>
+        <img src={attachments} alt="url" />
       </Box>
       {isMostRecentRead && (
         <Avatar
