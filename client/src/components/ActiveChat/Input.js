@@ -35,21 +35,29 @@ const Input = (props) => {
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
 
-  const uploadImage = () => {
+  const uploadImage = async () => {
+    console.log(image);
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "drewshka");
     data.append("cloud_name", "daknpbx8j");
-    fetch("https://api.cloudinary.com/v1_1/daknpbx8j/image/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setUrl(data.url);
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
+    const resp = await fetch(
+      "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+      {
+        method: "post",
+        body: data,
+      }
+    ).catch((err) => console.log(err));
+    // .then((resp) => resp.json())
+    const jsonResp = await resp.json();
+    // .then((data) => {
+    // setUrl(data.url);
+    // setUrl(jsonResp.url);
+    console.log(jsonResp);
+    return jsonResp.url;
+
+    // })
+    // .catch((err) => console.log(err));
   };
 
   //*
@@ -60,16 +68,20 @@ const Input = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const newUrl = await uploadImage();
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+    console.log("Checking current URL...", url);
     const reqBody = {
       text: event.target.text.value,
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      attachments: [url],
+      // attachments: [url],
+      attachments: [newUrl],
     };
     console.log(image);
-    console.log([url]);
+    console.log(url);
     await postMessage(reqBody);
     setText("");
     // setUrl("");
@@ -90,29 +102,43 @@ const Input = (props) => {
           {/* <Uploader /> */}
           {/* <input
             type="file"
-            onChange={(event) => setImage(event.target.files[0])}></input> */}
+            onChange={(event) => {
+              setImage(event.target.files[0]);
+              console.log(event.target.files[0]);
+            }}></input> */}
           <input
             type="file"
             multiple
             onChange={(event) => setImage(...event.target.files)}></input>
           <Button
             className={classes.login}
-            onClick={uploadImage}
+            // onClick={uploadImage}
             value={url}
             name="url"
             type="submit"
             color="primary"
             variant="contained"
             size="large">
-            Upload
+            Submit
           </Button>
+          {/* <Button
+            className={classes.login}
+            onClick={uploadImage}
+            value={url}
+            name="url"
+            type="upload"
+            color="primary"
+            variant="contained"
+            size="large">
+            Upload
+          </Button> */}
         </div>
-        <div>
+        {/* <div>
           <h1>Uploaded image will be displayed here</h1>
           <Card className={classes.card}>
-            <CardMedia className={classes.media} component="img" src={url} />
+            <CardMedia className={classes.media} component="img" src={image} />
           </Card>
-        </div>
+        </div> */}
       </FormControl>
     </form>
   );
