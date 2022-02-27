@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   FormControl,
   FilledInput,
-  CardMedia,
-  Card,
   Button,
+  ImageList,
+  // CardMedia,
+  // Card,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-// import Uploader from "./Uploader";
-// import Image from "mui-image";
-// import { Image } from "mui-image";
+// import  uploadFiles from "./Uploader";
+import Uploader from "./Uploader";
+import axios from "axios";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,35 +33,87 @@ const Input = (props) => {
   const { postMessage, otherUser, conversationId, user } = props;
 
   //* image upload code
-  const [image, setImage] = useState("");
+  // const [images, setImages] = useState([]);
+  const [files, setFiles] = useState([]);
   const [url, setUrl] = useState("");
+  // const [urls, setUrls] = useState("");
+
+  // const [image, setImage] = useState("");
+
+  // const uploadImage = async () => {
+  //   console.log(ImageList);
+  //   const data = new FormData();
+  //   data.append("file", images);
+  //   data.append("upload_preset", "drewshka");
+  //   data.append("cloud_name", "daknpbx8j");
+  //   const resp = await fetch(
+  //     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+  //     {
+  //       method: "post",
+  //       body: data,
+  //     }
+  //   ).catch((err) => console.log(err));
+  //   const jsonResp = await resp.json();
+  //   console.log(jsonResp);
+  //   return jsonResp.url;
+  // };
+
+  const fileSelectedHandler = (event) => {
+    setFiles([...files, event.target.files]);
+    // setImages(...images, ...event.target.images);
+    // setImages([...images, { ...event.target.images }]);
+
+    console.log(event.target.files);
+    console.log(files);
+    // console.log(url);
+  };
+
+  // const uploadImage = async () => {
+  //   const formData = new FormData();
+  //   for (let i = 0; i < images.length; i++) {
+  //   // for (let i = 0; i < files.length; i++) {
+  //   // for (let image of images) {
+  //   // formData.append("image", images[i]);
+  //   formData.append("image", files[0]);
+  //   // formData.append("key", "");
+  //   formData.append("upload_preset", "drewshka");
+  //   formData.append("cloud_name", "daknpbx8j");
+
+  //   const resp = await fetch(
+  //     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+  //     {
+  //       method: "post",
+  //       body: formData,
+  //     }
+  //   ).catch((err) => console.log(err));
+  //   const jsonResp = await resp.json();
+  //   console.log(jsonResp);
+  //   return jsonResp.url;
+  //   }
+  // };
 
   const uploadImage = async () => {
-    console.log(image);
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "drewshka");
-    data.append("cloud_name", "daknpbx8j");
+    // for (let i = 0; i < files.length; i++) {
+    const { files } = document.querySelector('input[type="file"]');
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "drewshka");
+    formData.append("cloud_name", "daknpbx8j");
+
     const resp = await fetch(
       "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
       {
         method: "post",
-        body: data,
+        body: formData,
       }
     ).catch((err) => console.log(err));
-    // .then((resp) => resp.json())
     const jsonResp = await resp.json();
-    // .then((data) => {
-    // setUrl(data.url);
-    // setUrl(jsonResp.url);
     console.log(jsonResp);
     return jsonResp.url;
-
-    // })
-    // .catch((err) => console.log(err));
+    // }
   };
 
-  //*
+  // //*
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -70,17 +123,23 @@ const Input = (props) => {
     event.preventDefault();
 
     const newUrl = await uploadImage();
+
+    // const newUrl = await uploadFiles();
+
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
-    console.log("Checking current URL...", url);
+    console.log("Checking current URL...", [newUrl]);
+    // console.log("Checking current URLS...", [urls]);
+    console.log("CHECKING FILES...", files);
     const reqBody = {
       text: event.target.text.value,
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      // attachments: [url],
       attachments: [newUrl],
+
+      // attachments: [url],
     };
-    console.log(image);
+    // console.log(image);
     console.log(url);
     await postMessage(reqBody);
     setText("");
@@ -88,7 +147,10 @@ const Input = (props) => {
   };
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit}>
+    <form
+      className={classes.root}
+      onSubmit={handleSubmit}
+      action="/profile-upload-multiple">
       <FormControl fullWidth hiddenLabel>
         <FilledInput
           classes={{ root: classes.input }}
@@ -106,14 +168,22 @@ const Input = (props) => {
               setImage(event.target.files[0]);
               console.log(event.target.files[0]);
             }}></input> */}
+          {/* <input
+            type="file"
+            multiple={true}
+            onChange={(event) => {
+              setImage(...event.target.files);
+              console.log(...event.target.files);
+            }}></input> */}
           <input
             type="file"
-            multiple
-            onChange={(event) => setImage(...event.target.files)}></input>
+            multiple={true}
+            // onChange={fileSelectedHandler}
+            onChange={(e) => fileSelectedHandler(e)}></input>
           <Button
             className={classes.login}
             // onClick={uploadImage}
-            value={url}
+            value={files}
             name="url"
             type="submit"
             color="primary"
@@ -121,22 +191,11 @@ const Input = (props) => {
             size="large">
             Submit
           </Button>
-          {/* <Button
-            className={classes.login}
-            onClick={uploadImage}
-            value={url}
-            name="url"
-            type="upload"
-            color="primary"
-            variant="contained"
-            size="large">
-            Upload
-          </Button> */}
         </div>
         {/* <div>
           <h1>Uploaded image will be displayed here</h1>
           <Card className={classes.card}>
-            <CardMedia className={classes.media} component="img" src={image} />
+            <CardMedia className={classes.media} component="img" src={url} />
           </Card>
         </div> */}
       </FormControl>
