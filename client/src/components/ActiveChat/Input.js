@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   FormControl,
   FilledInput,
@@ -10,9 +10,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-// import  uploadFiles from "./Uploader";
-// import Uploader from "./Uploader";
-// import axios from "axios";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,33 +29,19 @@ const Input = (props) => {
   const [text, setText] = useState("");
   const { postMessage, otherUser, conversationId, user } = props;
 
-  const initialImage = {
-    featured_image: "", //for single image
-    slider_images: [], // (array of strings)
-  };
-
   //* image upload code
-  // const [images, setImages] = useState([]);
   const [files, setFiles] = useState("");
-  // const [files, setFiles] = useState(initialImage);
+  const [urls, setUrls] = useState("");
 
-  const [url, setUrl] = useState("");
-  // const [urls, setUrls] = useState("");
-  // const [image, setImage] = useState("");
-
-  // const handleInput = (e) => {
-  //   let updateValues = { ...files };
-  //   updateValues[e.target.name] = e.target.value;
-  //   setFiles(updateValues);
-  //   console.log("Update input values", updateValues);
-  // };
-
-  // const handleSliderImages = (e) => {
-  //   if (e.target.files) {
-  //     setFiles({ ...files, slider_images: [...e.target.files] });
-  //   }
-  //   console.log("Update slider images", files);
-  // };
+  const handleFiles = (event) => {
+    setFiles([...files, ...event.target.files]);
+    // for (let i = 0; i < files.length; i++) {
+    //   console.log(files[i]);
+    //   uploadImage(files[i]);
+    // }
+    console.log(files);
+    console.log(...event.target.files);
+  };
 
   // const uploadImage = async () => {
   //   const data = new FormData();
@@ -74,73 +57,30 @@ const Input = (props) => {
   //   ).catch((err) => console.log(err));
   //   const jsonResp = await resp.json();
   //   console.log(jsonResp);
+  //   setUrls([urls, jsonResp]);
   //   return jsonResp.url;
   // };
 
   const uploadImage = async () => {
-    const data = new FormData();
+    let urls = [];
     for (let i = 0; i < files.length; i++) {
+      const data = new FormData();
       data.append("file", files[i]);
       data.append("upload_preset", "drewshka");
       data.append("cloud_name", "daknpbx8j");
+      const resp = await fetch(
+        "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+        {
+          method: "post",
+          body: data,
+        }
+      ).catch((err) => console.log(err));
+      const jsonResp = await resp.json();
+      console.log(jsonResp);
+      urls.push(jsonResp.url);
     }
-    const resp = await fetch(
-      "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
-      {
-        method: "post",
-        body: data,
-      }
-    ).catch((err) => console.log(err));
-    const jsonResp = await resp.json();
-    console.log(jsonResp);
-    return jsonResp.url;
+    return urls;
   };
-
-  // const uploadImage = async () => {
-  //   // for (let i = 0; i < images.length; i++) {
-  //   const formData = new FormData();
-  //   for (let i = 0; i < files.length; i++) {
-  //   // for (let image of images) {
-  //   // formData.append("image", images[i]);
-  //   formData.append("image", files);
-  //   formData.append("upload_preset", "drewshka");
-  //   formData.append("cloud_name", "daknpbx8j");
-
-  //   const resp = await fetch(
-  //     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
-  //     {
-  //       method: "post",
-  //       body: formData,
-  //     }
-  //   ).catch((err) => console.log(err));
-  //   const jsonResp = await resp.json();
-  //   console.log(jsonResp);
-  //   return jsonResp.url;
-  //   // }
-  // };
-
-  // const uploadImage = async () => {
-  //   // for (let i = 0; i < files.length; i++) {
-  //   const { files } = document.querySelector('input[type="file"]');
-  //   const formData = new FormData();
-  //   // for (const key of Object.keys(files)) {
-  //   formData.append("files", files[0]);
-  //   formData.append("upload_preset", "drewshka");
-  //   formData.append("cloud_name", "daknpbx8j");
-  //   // }
-
-  //   const resp = await fetch(
-  //     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
-  //     {
-  //       method: "post",
-  //       body: formData,
-  //     }
-  //   ).catch((err) => console.log(err));
-  //   const jsonResp = await resp.json();
-  //   console.log(jsonResp);
-  //   return jsonResp.url;
-  //   // }
-  // };
 
   // //*
 
@@ -152,23 +92,25 @@ const Input = (props) => {
     event.preventDefault();
 
     const newUrl = await uploadImage();
-    // const newUrl = await uploadFiles();
+    // const newFiles = await uploadImage(files);
 
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     console.log("Checking current URL...", [newUrl]);
-    console.log("CHECKING FILES...", files);
+    console.log("CHECKING FILES...", [files]);
+
     const reqBody = {
       text: event.target.text.value,
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      attachments: [newUrl],
+      // attachments: [newUrl],
+      attachments: newUrl,
     };
     // console.log(image);
-    console.log(url);
+    console.log(reqBody);
     await postMessage(reqBody);
     setText("");
-    // setUrl("");
+    // setFiles(newUrl);
   };
 
   return (
@@ -189,11 +131,14 @@ const Input = (props) => {
           {/* <Uploader /> */}
           {/* <input
             type="file"
+            multiple={true}
             onChange={(event) => {
-              setImage(event.target.files[0]);
-              console.log(event.target.files[0]);
+              setImages([...images, ...event.target.files]);
+              // setFiles(...event.target.files);
+              console.log(files);
+              console.log(...event.target.files);
             }}></input> */}
-          <input
+          {/* <input
             type="file"
             multiple={true}
             onChange={(event) => {
@@ -201,16 +146,11 @@ const Input = (props) => {
               // setFiles(...event.target.files);
               console.log(files);
               console.log(...event.target.files);
-            }}></input>
-          {/* <input
-            type="file"
-            multiple={true}
-            onChange={handleInput}
-            // onChange={(e) => fileSelectedHandler(e)}
-          ></input> */}
+            }}></input> */}
+          <input type="file" multiple={true} onChange={handleFiles}></input>
           <Button
             className={classes.login}
-            // onClick={uploadImage}
+            // onClick={handleImageUpload}
             value={files}
             name="url"
             type="submit"
@@ -240,3 +180,88 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(null, mapDispatchToProps)(Input);
+
+// const uploadImage = async () => {
+//   const data = new FormData();
+//   data.append("file", files);
+//   data.append("upload_preset", "drewshka");
+//   data.append("cloud_name", "daknpbx8j");
+//   const resp = await fetch(
+//     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+//     {
+//       method: "post",
+//       body: data,
+//     }
+//   ).catch((err) => console.log(err));
+//   const jsonResp = await resp.json();
+//   console.log(jsonResp);
+//   return jsonResp.url;
+// };
+
+// const uploadImage = async () => {
+//   // for (let i = 0; i < images.length; i++) {
+//   const formData = new FormData();
+//   for (let i = 0; i < files.length; i++) {
+//   // for (let image of images) {
+//   // formData.append("image", images[i]);
+//   formData.append("image", files);
+//   formData.append("upload_preset", "drewshka");
+//   formData.append("cloud_name", "daknpbx8j");
+
+//   const resp = await fetch(
+//     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+//     {
+//       method: "post",
+//       body: formData,
+//     }
+//   ).catch((err) => console.log(err));
+//   const jsonResp = await resp.json();
+//   console.log(jsonResp);
+//   return jsonResp.url;
+//   // }
+// };
+
+// const uploadImage = async () => {
+//   // for (let i = 0; i < files.length; i++) {
+//   const { files } = document.querySelector('input[type="file"]');
+//   const formData = new FormData();
+//   // for (const key of Object.keys(files)) {
+//   formData.append("files", files[0]);
+//   formData.append("upload_preset", "drewshka");
+//   formData.append("cloud_name", "daknpbx8j");
+//   // }
+
+//   const resp = await fetch(
+//     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+//     {
+//       method: "post",
+//       body: formData,
+//     }
+//   ).catch((err) => console.log(err));
+//   const jsonResp = await resp.json();
+//   console.log(jsonResp);
+//   return jsonResp.url;
+//   // }
+// };
+
+// const uploadImage = async () => {
+//   // for (const key of Object.keys(files)) {
+//     const { files } = document.querySelector('input[type="file"]');
+//   const formData = new FormData();
+//   for (let i = 0; i < files.length; i++) {
+//     formData.append("files", files[i]);
+//     formData.append("upload_preset", "drewshka");
+//     formData.append("cloud_name", "daknpbx8j");
+//   }
+//   const resp = await fetch(
+//     "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+//     {
+//       method: "post",
+//       body: formData,
+//     }
+//   ).catch((err) => console.log(err));
+//   const jsonResp = await resp.json();
+//   console.log(jsonResp);
+//   return jsonResp.url;
+//   // }
+// };
