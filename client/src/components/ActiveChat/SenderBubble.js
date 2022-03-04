@@ -53,13 +53,14 @@ const SenderBubble = (props) => {
       <Typography className={classes.date}>{time}</Typography>
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{text}</Typography>
-        <img src={attachments} alt="url" />
-        {/* {attachments.length > 0 && <img src={attachments} alt="url" />} */}
-        {/* {attachments.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt="data-url" />
-          </div>
-        ))} */}
+        {/* <img src={attachments} alt="url" /> */}
+        {attachments.map((image, i) => {
+          return (
+            <div className="image_container" key={i}>
+              <img src={image} alt="data-url" />
+            </div>
+          );
+        })}
       </Box>
       {isMostRecentRead && (
         <Avatar
