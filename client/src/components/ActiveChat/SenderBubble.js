@@ -34,24 +34,24 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "baseline",
     flexDirection: "row",
-    // margin: "0 0.5rem",
   },
   image: {
     height: "10rem",
     width: "10rem",
-    // margin: "0 0.5rem",
+    objectFit: "cover",
   },
   imageCard: {
-    // marginRight: "0.5rem",
-    display: "flex",
-    justifyContent: "center",
+    marginRight: "0.5rem",
+    borderRadius: "4px 4px 0px 4px",
+    "&:last-child": {
+      marginRight: "0",
+    },
   },
 }));
 
 const SenderBubble = (props) => {
   const classes = useStyles();
   const { time, text, otherUser, isMostRecentRead, attachments } = props;
-  // console.log(attachments);
 
   return (
     <Box className={classes.root}>
@@ -71,7 +71,8 @@ const SenderBubble = (props) => {
             );
           })}
         </Box>
-        <Typography className={classes.text}>{text}</Typography>
+        {text && <Typography className={classes.text}>{text}</Typography>}
+        {/* <Typography className={classes.text}>{text}</Typography> */}
       </Box>
       {isMostRecentRead && (
         <Avatar
