@@ -76,7 +76,7 @@ const Input = (props) => {
         }
       ).catch((err) => console.log(err));
       const jsonResp = await resp.json();
-      console.log(jsonResp);
+      // console.log(jsonResp);
       urls.push(jsonResp.url);
     }
     return urls;
@@ -92,7 +92,6 @@ const Input = (props) => {
     event.preventDefault();
 
     const newUrl = await uploadImage();
-    // const newFiles = await uploadImage(files);
 
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     console.log("Checking current URL...", [newUrl]);
@@ -103,8 +102,8 @@ const Input = (props) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      // attachments: [newUrl],
       attachments: newUrl,
+      // attachments: [newUrl],
     };
     // console.log(image);
     console.log(reqBody);
