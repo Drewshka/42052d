@@ -143,6 +143,7 @@ export const markMessagesRead = (user, convoId) => async (dispatch) => {
     console.error(error);
   }
 };
+
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/users/${searchTerm}`);
