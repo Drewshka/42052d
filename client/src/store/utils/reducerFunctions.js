@@ -9,7 +9,6 @@ export const addMessageToStore = (state, payload) => {
     };
     newConvo.latestMessageText = message.text;
 
-    console.log(newConvo);
     return [newConvo, ...state];
   }
 

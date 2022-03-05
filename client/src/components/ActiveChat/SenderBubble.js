@@ -72,7 +72,6 @@ const SenderBubble = (props) => {
           })}
         </Box>
         {text && <Typography className={classes.text}>{text}</Typography>}
-        {/* <Typography className={classes.text}>{text}</Typography> */}
       </Box>
       {isMostRecentRead && (
         <Avatar
@@ -85,16 +84,3 @@ const SenderBubble = (props) => {
 };
 
 export default SenderBubble;
-
-// const SenderBubble = (props) => {
-//   const classes = useStyles();
-//   const { time, text } = props;
-//   return (
-//     <Box className={classes.root}>
-//       <Typography className={classes.date}>{time}</Typography>
-//       <Box className={classes.bubble}>
-//         <Typography className={classes.text}>{text}</Typography>
-//       </Box>
-//     </Box>
-//   );
-// };
