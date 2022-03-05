@@ -13,9 +13,11 @@ export const addMessageToStore = (state, payload) => {
 
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
+      const convoCopy = { ...convo };
+      convoCopy.messages.push(message);
+      convoCopy.latestMessageText = message.text;
+      convoCopy.unreadMessages += 1;
+      return convoCopy;
     } else {
       return convo;
     }
@@ -26,7 +28,7 @@ export const addOnlineUserToStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
-      convoCopy.otherUser = { ...convoCopy.otherUser, online: true };
+      convoCopy.otherUser.online = true;
       return convoCopy;
     } else {
       return convo;
@@ -38,7 +40,7 @@ export const removeOfflineUserFromStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
-      convoCopy.otherUser = { ...convoCopy.otherUser, online: false };
+      convoCopy.otherUser.online = false;
       return convoCopy;
     } else {
       return convo;
@@ -69,12 +71,32 @@ export const addSearchedUsersToStore = (state, users) => {
 export const addNewConvoToStore = (state, recipientId, message) => {
   return state.map((convo) => {
     if (convo.otherUser.id === recipientId) {
-      convo.id = message.conversationId;
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
+      const newConvo = { ...convo };
+      newConvo.id = message.conversationId;
+      newConvo.messages.push(message);
+      newConvo.latestMessageText = message.text;
+      newConvo.unreadMessages += 1;
+
+      return newConvo;
     } else {
       return convo;
     }
+  });
+};
+
+//* added new function to make messages appear in correct order
+export const sortMessagesForStore = (conversations) => {
+  return conversations.map((conversation) => {
+    const newConvo = { ...conversation };
+    newConvo.messages = newConvo.messages.sort((a, b) => {
+      if (a.createdAt < b.createdAt) {
+        return -1;
+      } else if (a.createdAt > b.createdAt) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return newConvo;
   });
 };

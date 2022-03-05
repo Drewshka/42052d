@@ -4,6 +4,7 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
+  sortMessagesForStore,
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -71,8 +72,10 @@ export const addConversation = (recipientId, newMessage) => {
 
 const reducer = (state = [], action) => {
   switch (action.type) {
+    // case GET_CONVERSATIONS:
+    //   return action.conversations;
     case GET_CONVERSATIONS:
-      return action.conversations;
+      return sortMessagesForStore(action.conversations);
     case SET_MESSAGE:
       return addMessageToStore(state, action.payload);
     case ADD_ONLINE_USER: {
