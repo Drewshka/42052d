@@ -14,9 +14,9 @@ export const addMessageToStore = (state, payload) => {
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
       const convoCopy = { ...convo };
-      convoCopy.messages.push(message);
-      convoCopy.latestMessageText = message.text;
-      convoCopy.unreadMessages += 1;
+      const messageCopy = { ...message };
+      convoCopy.messages.push(messageCopy);
+      convoCopy.latestMessageText = messageCopy.text;
       return convoCopy;
     } else {
       return convo;
@@ -28,7 +28,7 @@ export const addOnlineUserToStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
-      convoCopy.otherUser.online = true;
+      convoCopy.otherUser = { ...convoCopy.otherUser, online: true };
       return convoCopy;
     } else {
       return convo;
@@ -40,7 +40,7 @@ export const removeOfflineUserFromStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
-      convoCopy.otherUser.online = false;
+      convoCopy.otherUser = { ...convoCopy.otherUser, online: false };
       return convoCopy;
     } else {
       return convo;
@@ -72,11 +72,10 @@ export const addNewConvoToStore = (state, recipientId, message) => {
   return state.map((convo) => {
     if (convo.otherUser.id === recipientId) {
       const newConvo = { ...convo };
-      newConvo.id = message.conversationId;
-      newConvo.messages.push(message);
-      newConvo.latestMessageText = message.text;
-      newConvo.unreadMessages += 1;
-
+      const newMessage = { ...message };
+      newConvo.id = newMessage.conversationId;
+      newConvo.messages.push(newMessage);
+      newConvo.latestMessageText = newMessage.text;
       return newConvo;
     } else {
       return convo;
@@ -84,18 +83,11 @@ export const addNewConvoToStore = (state, recipientId, message) => {
   });
 };
 
-//* added new function to make messages appear in correct order
 export const sortMessagesForStore = (conversations) => {
   return conversations.map((conversation) => {
     const newConvo = { ...conversation };
     newConvo.messages = newConvo.messages.sort((a, b) => {
-      if (a.createdAt < b.createdAt) {
-        return -1;
-      } else if (a.createdAt > b.createdAt) {
-        return 1;
-      } else {
-        return 0;
-      }
+      return new Date(a.createdAt) - new Date(b.createdAt);
     });
     return newConvo;
   });

@@ -72,8 +72,6 @@ export const addConversation = (recipientId, newMessage) => {
 
 const reducer = (state = [], action) => {
   switch (action.type) {
-    // case GET_CONVERSATIONS:
-    //   return action.conversations;
     case GET_CONVERSATIONS:
       return sortMessagesForStore(action.conversations);
     case SET_MESSAGE:
