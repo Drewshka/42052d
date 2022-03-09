@@ -21,8 +21,8 @@ const Input = (props) => {
   const classes = useStyles();
   const [text, setText] = useState("");
   const { postMessage, otherUser, conversationId, user } = props;
-  //* image upload code
-  const [files, setFiles] = useState("");
+  // const [files, setFiles] = useState("");
+  const [files, setFiles] = useState([]);
 
   const handleFiles = (event) => {
     setFiles([...files, ...event.target.files]);
@@ -47,8 +47,6 @@ const Input = (props) => {
     }
     return urls;
   };
-
-  // //*
 
   const handleChange = (event) => {
     setText(event.target.value);

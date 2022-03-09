@@ -21,6 +21,16 @@ const useStyles = makeStyles((theme) => ({
     padding: 8,
     fontWeight: "bold",
   },
+  textMultiple: {
+    fontSize: 14,
+    color: "#91A3C0",
+    letterSpacing: -0.2,
+    padding: 8,
+    fontWeight: "bold",
+    background: "#F4F6FA",
+    borderRadius: "10px 10px 0 10px",
+    marginBottom: "0.5rem",
+  },
   bubble: {
     background: "#F4F6FA",
     borderRadius: "10px 10px 0 10px",
@@ -40,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
     width: "10rem",
     objectFit: "cover",
   },
+  imageMultiple: {
+    height: "6rem",
+    width: "8rem",
+    objectFit: "cover",
+  },
   imageCard: {
     marginRight: "0.5rem",
     borderRadius: "4px 4px 0px 4px",
@@ -56,22 +71,50 @@ const SenderBubble = (props) => {
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
+      {text && attachments.length > 1 && (
+        <Typography
+          // className={classes.text}
+          className={
+            attachments.length > 1 ? classes.textMultiple : classes.text
+          }>
+          {text}
+        </Typography>
+      )}
       <Box className={classes.bubble}>
-        <Box className={classes.images}>
-          {attachments.map((image, i) => {
-            return (
-              <Card className={classes.imageCard} key={i}>
-                <CardMedia
-                  src={image}
-                  alt="data-url"
-                  component="img"
-                  className={classes.image}
-                />
-              </Card>
-            );
-          })}
-        </Box>
-        {text && <Typography className={classes.text}>{text}</Typography>}
+        {attachments && (
+          <Box className={classes.images}>
+            {attachments.map((image, i) => {
+              console.log(image.toString());
+              return (
+                <Card className={classes.imageCard} key={image}>
+                  <CardMedia
+                    src={image}
+                    alt="data-url"
+                    component="img"
+                    // className={classes.image}
+                    className={
+                      attachments.length > 1
+                        ? classes.imageMultiple
+                        : classes.image
+                    }
+                  />
+                </Card>
+              );
+            })}
+          </Box>
+        )}
+        {text && (
+          <Typography
+            style={{
+              display:
+                attachments.length === 1 || attachments.length === 0
+                  ? "block"
+                  : "none",
+            }}
+            className={classes.text}>
+            {text}
+          </Typography>
+        )}
       </Box>
       {isMostRecentRead && (
         <Avatar
