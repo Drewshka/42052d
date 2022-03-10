@@ -3,6 +3,7 @@ import { FormControl, FilledInput, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -66,7 +67,7 @@ const Input = (props) => {
     };
     await postMessage(reqBody);
     setText("");
-    setFiles("");
+    setFiles([]);
   };
 
   return (

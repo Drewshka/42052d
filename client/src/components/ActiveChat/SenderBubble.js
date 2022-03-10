@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar, Card, CardMedia } from "@material-ui/core";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,51 +72,54 @@ const SenderBubble = (props) => {
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-      {text && attachments.length > 1 && (
-        <Typography
-          // className={classes.text}
-          className={
-            attachments.length > 1 ? classes.textMultiple : classes.text
-          }>
-          {text}
-        </Typography>
-      )}
-      <Box className={classes.bubble}>
-        {attachments && (
-          <Box className={classes.images}>
-            {attachments.map((image, i) => {
-              console.log(image.toString());
-              return (
-                <Card className={classes.imageCard} key={image}>
-                  <CardMedia
-                    src={image}
-                    alt="data-url"
-                    component="img"
-                    // className={classes.image}
-                    className={
-                      attachments.length > 1
-                        ? classes.imageMultiple
-                        : classes.image
-                    }
-                  />
-                </Card>
-              );
-            })}
+      {attachments !== null && (
+        <Box>
+          {text && attachments.length > 1 && (
+            <Typography
+              className={
+                attachments.length > 1 ? classes.textMultiple : classes.text
+              }>
+              {text}
+            </Typography>
+          )}
+          <Box className={classes.bubble}>
+            {attachments && (
+              <Box className={classes.images}>
+                {attachments.map((image) => {
+                  console.log(uniqid("image-"));
+                  return (
+                    <Card className={classes.imageCard} key={uniqid("image-")}>
+                      <CardMedia
+                        src={image}
+                        alt="data-url"
+                        component="img"
+                        // className={classes.image}
+                        className={
+                          attachments.length > 1
+                            ? classes.imageMultiple
+                            : classes.image
+                        }
+                      />
+                    </Card>
+                  );
+                })}
+              </Box>
+            )}
+            {text && (
+              <Typography
+                style={{
+                  display:
+                    attachments.length === 1 || attachments.length === 0
+                      ? "block"
+                      : "none",
+                }}
+                className={classes.text}>
+                {text}
+              </Typography>
+            )}
           </Box>
-        )}
-        {text && (
-          <Typography
-            style={{
-              display:
-                attachments.length === 1 || attachments.length === 0
-                  ? "block"
-                  : "none",
-            }}
-            className={classes.text}>
-            {text}
-          </Typography>
-        )}
-      </Box>
+        </Box>
+      )}
       {isMostRecentRead && (
         <Avatar
           alt={otherUser.username}
