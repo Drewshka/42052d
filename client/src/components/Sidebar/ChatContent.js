@@ -27,23 +27,13 @@ const ChatContent = (props) => {
   const { latestMessageText, otherUser, unreadMessages, messages } =
     conversation;
 
-  console.log(conversation);
-  console.log(props);
-
   return (
     <Box className={classes.root}>
       <Box>
         <Typography className={classes.username}>
           {otherUser.username}
         </Typography>
-        <Typography
-          className={
-            // Bold unread text if recipient of message
-            unreadMessages > 0 &&
-            messages[messages.length - 1].senderId !== user.id
-              ? classes.previewUnreadText
-              : classes.previewText
-          }>
+        <Typography className={classes.previewText}>
           {latestMessageText}
         </Typography>
       </Box>

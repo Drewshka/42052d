@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar, Card, CardMedia } from "@material-ui/core";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -64,9 +65,9 @@ const OtherUserBubble = (props) => {
         </Typography>
         <Box className={classes.bubble}>
           <Box className={classes.images}>
-            {attachments.map((image, i) => {
+            {attachments.map((image) => {
               return (
-                <Card className={classes.imageCard} key={i}>
+                <Card className={classes.imageCard} key={uniqid("image-")}>
                   <CardMedia
                     src={image}
                     alt="data-url"

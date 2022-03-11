@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { FormControl, FilledInput, Button } from "@material-ui/core";
+import { FormControl, FilledInput, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-import uniqid from "uniqid";
+import dotenv from "dotenv";
+import path from "path";
+import axios from "axios";
+
+// import axios from "axios";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,24 +33,65 @@ const Input = (props) => {
     setFiles([...files, ...event.target.files]);
   };
 
+  // const uploadImage = async () => {
+  //   let urls = [];
+  //   for (let i = 0; i < files.length; i++) {
+  //     const data = new FormData();
+  //     data.append("file", files[i]);
+  //     // data.append(
+  //     //   "upload_preset",
+  //     //   process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+  //     // );
+  //     // data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+  //     data.append("upload_preset", "drewshka");
+  //     data.append("cloud_name", "daknpbx8j");
+  //     const resp = await fetch(
+  //       "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
+  //       {
+  //         method: "post",
+  //         body: data,
+  //       }
+  //     ).catch((err) => console.log(err));
+  //     const jsonResp = await resp.json();
+  //     urls.push(jsonResp.url);
+  //   }
+  //   return urls;
+  //   // return Promise.all(urls);
+  // };
+
   const uploadImage = async () => {
     let urls = [];
     for (let i = 0; i < files.length; i++) {
-      const data = new FormData();
-      data.append("file", files[i]);
-      data.append("upload_preset", "drewshka");
-      data.append("cloud_name", "daknpbx8j");
-      const resp = await fetch(
-        "https://api.cloudinary.com/v1_1/daknpbx8j/image/upload",
-        {
+      try {
+        const data = new FormData();
+        data.append("file", files[i]);
+        // data.append("upload_preset", "drewshka");
+        // data.append("cloud_name", "daknpbx8j");
+        data.append(
+          "upload_preset",
+          process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+        );
+        data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+        // const resp = await fetch(process.env.REACT_APP_URL, {
+        //   method: "post",
+        //   body: data,
+        // });
+        const resp = await axios.post(process.env.REACT_APP_URL, {
           method: "post",
           body: data,
-        }
-      ).catch((err) => console.log(err));
-      const jsonResp = await resp.json();
-      urls.push(jsonResp.url);
+          transformRequest: (data, headers) => {
+            delete headers.common["Authorization"];
+            return data;
+          },
+        });
+        const jsonResp = await resp.json();
+        urls.push(jsonResp.url);
+      } catch (error) {
+        console.error(error);
+      }
     }
-    return urls;
+    return Promise.all(urls);
+    // return urls;
   };
 
   const handleChange = (event) => {
@@ -57,6 +102,7 @@ const Input = (props) => {
     event.preventDefault();
 
     const newUrl = await uploadImage();
+    // const newUrl = await promiseEx();
 
     const reqBody = {
       text: event.target.text.value,
@@ -84,7 +130,7 @@ const Input = (props) => {
           name="text"
           onChange={handleChange}
         />
-        <div>
+        <Box>
           <input type="file" multiple={true} onChange={handleFiles}></input>
           <Button
             className={classes.login}
@@ -96,7 +142,7 @@ const Input = (props) => {
             size="large">
             Submit
           </Button>
-        </div>
+        </Box>
       </FormControl>
     </form>
   );
