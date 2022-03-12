@@ -3,8 +3,6 @@ import { FormControl, FilledInput, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-import dotenv from "dotenv";
-import path from "path";
 import axios from "axios";
 
 // import axios from "axios";
@@ -65,25 +63,21 @@ const Input = (props) => {
       try {
         const data = new FormData();
         data.append("file", files[i]);
-        // data.append("upload_preset", "drewshka");
-        // data.append("cloud_name", "daknpbx8j");
         data.append(
           "upload_preset",
           process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
         );
         data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
-        // const resp = await fetch(process.env.REACT_APP_URL, {
-        //   method: "post",
-        //   body: data,
-        // });
-        const resp = await axios.post(process.env.REACT_APP_URL, {
+        const resp = await fetch(process.env.REACT_APP_URL, {
           method: "post",
           body: data,
-          transformRequest: (data, headers) => {
-            delete headers.common["Authorization"];
-            return data;
-          },
         });
+        // const resp = await axios.post(process.env.REACT_APP_URL, {
+        //   transformRequest: (data, headers) => {
+        //     delete headers.common["Authorization"];
+        //     return data;
+        //   },
+        // });
         const jsonResp = await resp.json();
         urls.push(jsonResp.url);
       } catch (error) {

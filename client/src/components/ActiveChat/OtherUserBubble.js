@@ -23,12 +23,27 @@ const useStyles = makeStyles(() => ({
     backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
     borderRadius: "0 10px 10px 10px",
   },
+  secondaryBubble: {
+    backgroundImage: "linear-gradient(225deg, #FFFFF 0%, #FFFFF 100%)",
+    borderRadius: "0 10px 10px 10px",
+  },
   text: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#FFFFFF",
     letterSpacing: -0.2,
     padding: 8,
+  },
+  textMultiple: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    letterSpacing: -0.2,
+    padding: 8,
+    fontWeight: "bold",
+    background: "#F4F6FA",
+    borderRadius: "10px 10px 0 10px",
+    marginBottom: "0.5rem",
+    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
   },
   images: {
     display: "flex",
@@ -40,6 +55,12 @@ const useStyles = makeStyles(() => ({
     height: "10rem",
     width: "10rem",
     objectFit: "cover",
+  },
+  imageMultiple: {
+    height: "6rem",
+    width: "8rem",
+    objectFit: "cover",
+    backgroundColor: "rgba(0, 0, 0, 0.87);",
   },
   imageCard: {
     marginRight: "0.5rem",
@@ -63,22 +84,53 @@ const OtherUserBubble = (props) => {
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}
         </Typography>
-        <Box className={classes.bubble}>
-          <Box className={classes.images}>
-            {attachments.map((image) => {
-              return (
-                <Card className={classes.imageCard} key={uniqid("image-")}>
-                  <CardMedia
-                    src={image}
-                    alt="data-url"
-                    component="img"
-                    className={classes.image}
-                  />
-                </Card>
-              );
-            })}
+        <Box>
+          {text && attachments.length > 1 && (
+            <Typography
+              className={
+                attachments.length > 1 ? classes.textMultiple : classes.text
+              }>
+              {text}
+            </Typography>
+          )}
+          <Box
+            className={
+              attachments.length > 1 ? classes.secondaryBubble : classes.bubble
+            }>
+            {attachments && (
+              <Box className={classes.images}>
+                {attachments.map((image) => {
+                  return (
+                    <Card className={classes.imageCard} key={uniqid("image-")}>
+                      <CardMedia
+                        src={image}
+                        alt="data-url"
+                        component="img"
+                        // className={classes.image}
+                        className={
+                          attachments.length > 1
+                            ? classes.imageMultiple
+                            : classes.image
+                        }
+                      />
+                    </Card>
+                  );
+                })}
+              </Box>
+            )}
+            {text && (
+              <Typography
+                style={{
+                  display:
+                    attachments.length === 1 || attachments.length === 0
+                      ? "block"
+                      : "none",
+                }}
+                className={classes.text}>
+                {text}
+              </Typography>
+            )}
           </Box>
-          {text && <Typography className={classes.text}>{text}</Typography>}
         </Box>
       </Box>
     </Box>
