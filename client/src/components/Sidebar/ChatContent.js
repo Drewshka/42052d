@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
 const ChatContent = (props) => {
   const classes = useStyles();
 
-  const { conversation } = props;
-  const { latestMessageText, otherUser } = conversation;
+  const { conversation, user } = props;
+  const { latestMessageText, otherUser, unreadMessages, messages } =
+    conversation;
 
   return (
     <Box className={classes.root}>
@@ -36,6 +37,14 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
+      {unreadMessages > 0 &&
+      messages[messages.length - 1].senderId !== user.id ? (
+        <Box className={classes.child}>
+          <Typography className={classes.notification}>
+            {unreadMessages}
+          </Typography>
+        </Box>
+      ) : null}
     </Box>
   );
 };
