@@ -86,9 +86,8 @@ const SenderBubble = (props) => {
             {attachments && (
               <Box className={classes.images}>
                 {attachments.map((image) => {
-                  console.log(uniqid("image-"));
                   return (
-                    <Card className={classes.imageCard} key={uniqid("image-")}>
+                    <Card className={classes.imageCard} key={image}>
                       <CardMedia
                         src={image}
                         alt="data-url"
