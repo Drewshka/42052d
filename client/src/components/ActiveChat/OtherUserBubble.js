@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar, Card, CardMedia } from "@material-ui/core";
-import uniqid from "uniqid";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,6 +32,9 @@ const useStyles = makeStyles(() => ({
     color: "#FFFFFF",
     letterSpacing: -0.2,
     padding: 8,
+  },
+  nonText: {
+    display: "none",
   },
   textMultiple: {
     fontSize: 14,
@@ -79,58 +81,61 @@ const OtherUserBubble = (props) => {
       <Avatar
         alt={otherUser.username}
         src={otherUser.photoUrl}
-        className={classes.avatar}></Avatar>
+        className={classes.avatar}
+      />
       <Box>
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}
         </Typography>
-        <Box>
-          {text && attachments.length > 1 && (
-            <Typography
-              className={
-                attachments.length > 1 ? classes.textMultiple : classes.text
-              }>
-              {text}
-            </Typography>
-          )}
-          <Box
-            className={
-              attachments.length > 1 ? classes.secondaryBubble : classes.bubble
-            }>
-            {attachments && (
-              <Box className={classes.images}>
-                {attachments.map((image) => {
-                  return (
-                    <Card className={classes.imageCard} key={image}>
-                      <CardMedia
-                        src={image}
-                        alt="data-url"
-                        component="img"
-                        className={
-                          attachments.length > 1
-                            ? classes.imageMultiple
-                            : classes.image
-                        }
-                      />
-                    </Card>
-                  );
-                })}
-              </Box>
-            )}
-            {text && (
+        {attachments !== null && (
+          <Box>
+            {text && attachments.length > 1 && (
               <Typography
-                style={{
-                  display:
-                    attachments.length === 1 || attachments.length === 0
-                      ? "block"
-                      : "none",
-                }}
-                className={classes.text}>
+                className={
+                  attachments.length > 1 ? classes.textMultiple : classes.text
+                }>
                 {text}
               </Typography>
             )}
+            <Box
+              className={
+                attachments.length > 1
+                  ? classes.secondaryBubble
+                  : classes.bubble
+              }>
+              {attachments && (
+                <Box className={classes.images}>
+                  {attachments.map((image) => {
+                    return (
+                      <Card className={classes.imageCard} key={image}>
+                        <CardMedia
+                          src={image}
+                          alt="data-url"
+                          component="img"
+                          className={
+                            attachments.length > 1
+                              ? classes.imageMultiple
+                              : classes.image
+                          }
+                        />
+                      </Card>
+                    );
+                  })}
+                </Box>
+              )}
+              {text && (
+                <Typography
+                  className={
+                    attachments.length === 1 || attachments.length === 0
+                      ? classes.text
+                      : classes.nonText
+                  }>
+                  {text}
+                </Typography>
+              )}
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
     </Box>
   );

@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 8,
     fontWeight: "bold",
   },
+  nonText: {
+    display: "none",
+  },
   textMultiple: {
     fontSize: 14,
     color: "#91A3C0",
@@ -104,13 +107,11 @@ const SenderBubble = (props) => {
             )}
             {text && (
               <Typography
-                style={{
-                  display:
-                    attachments.length === 1 || attachments.length === 0
-                      ? "block"
-                      : "none",
-                }}
-                className={classes.text}>
+                className={
+                  attachments.length === 1 || attachments.length === 0
+                    ? classes.text
+                    : classes.nonText
+                }>
                 {text}
               </Typography>
             )}
@@ -121,7 +122,8 @@ const SenderBubble = (props) => {
         <Avatar
           alt={otherUser.username}
           className={classes.small}
-          src={otherUser.photoUrl}></Avatar>
+          src={otherUser.photoUrl}
+        />
       )}
     </Box>
   );
