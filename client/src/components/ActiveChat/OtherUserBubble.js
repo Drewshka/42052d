@@ -101,12 +101,11 @@ const OtherUserBubble = (props) => {
               <Box className={classes.images}>
                 {attachments.map((image) => {
                   return (
-                    <Card className={classes.imageCard} key={uniqid("image-")}>
+                    <Card className={classes.imageCard} key={image}>
                       <CardMedia
                         src={image}
                         alt="data-url"
                         component="img"
-                        // className={classes.image}
                         className={
                           attachments.length > 1
                             ? classes.imageMultiple

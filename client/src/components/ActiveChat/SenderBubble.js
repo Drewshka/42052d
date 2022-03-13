@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar, Card, CardMedia } from "@material-ui/core";
-import uniqid from "uniqid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,7 +91,6 @@ const SenderBubble = (props) => {
                         src={image}
                         alt="data-url"
                         component="img"
-                        // className={classes.image}
                         className={
                           attachments.length > 1
                             ? classes.imageMultiple

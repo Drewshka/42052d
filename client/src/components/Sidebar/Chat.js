@@ -30,8 +30,6 @@ const Chat = (props) => {
 
   const user = props.user;
 
-  // console.log(conversation.messages);
-  console.log(props);
   return (
     <Box onClick={() => handleClick(conversation)} className={classes.root}>
       <BadgeAvatar
